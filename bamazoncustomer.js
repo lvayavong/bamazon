@@ -1,46 +1,11 @@
-// var mysql = require("mysql");
-//
-//
-// var connection = mysql.createConnection({
-//   host: "localhost",
-//   port: 3306,
-//
-//
-//   user: "root",
-//
-//
-//   password: "comicfan7",
-//   database: "bamazon"
-// });
-//
-// connection.connect(function(err) {
-//   if (err) throw err;
-//   console.log("connected as id " + connection.threadId + "\n");
-//   readColleges();
-// });
-//
-// function readColleges() {
-//   connection.query("SELECT name FROM products", function(err, res) {
-//     if (err) throw err;
-//
-//
-//     console.log(res);
-//     connection.end();
-//   });
-// }
 
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
 
-function Product(id, product_name, department_name, price, stock) {
-	this.id = id;
-	this.product_name = product_name;
-	this.department_name = department_name;
-	this.price = price;
-	this.stock = stock;
-}
-var connection = mysql.createConnection({
+
+  var connectionDb = mysql.createConnection({
+
 	host: "localhost",
 	port: 3306,
 
@@ -48,50 +13,57 @@ var connection = mysql.createConnection({
 	user: "root",
 
 	// Your password
-	password: "comicfan7",
+	password: "",
 	database: "bamazon"
 });
 
-connection.connect(function (err) {
+connectionDb.connect(function (err) {
 	if (err) throw err;
-	console.log("-------Welcome to Bamazon-------")
-	displayProducts();
+	console.log("Bamazon")
+	console.log('Movies and Novels');
+	displayPdts();
 });
+function Product(id, product_name, department_name, price, stock) {
+	this.id = id;
+	this.product_name = product_name;
+	this.department_name = department_name;
+	this.price = price;
+	this.stock = stock;
+}
+function displayPdts() {
 
-function displayProducts() {
-
-	connection.query("SELECT * FROM bamazon.products ", function (err, res) {
+	connectionDb.query("SELECT * FROM bamazon.products ", function (err, res) {
 
 
 
-		var productsArr = res.map(function (val) {
+		var productlist = res.map(function (val) {
 			console.log(`ID: ${val.id}  PRODUCT: ${val.product_name}      DEPARTMENT: ${val.department_name}     PRICE: ${val.price}    QUANTITY: ${val.stock}`);
-			console.log("----------------------------------------------------------------------------------------------------------\n");
 			return new Product(val.id, val.product_name, val.department_name, val.price, val.stock);
 
 		});
-		shop(productsArr);
+		shop(productlist);
 	});
 }
 
-function shop(productsArr) {
+function shop(productlist) {
 
 	inquirer
 		.prompt({
 			name: "purchase",
 			type: "list",
-			message: "What is the ID of the product you would to purchase? We have some cool things!",
+			message: "Pick the ID",
 			choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
 		})
 		.then(function (answer) {
-			var idrawchoice = answer.purchase;
-			var idchoice = parseInt(idrawchoice);
-			getQuantity(idchoice)
+			var clientIdRawChoiceAmt = answer.purchase;
+			var clientIdChoiceAmt = parseInt(clientIdRawChoiceAmt);
+			getQuantity(clientIdChoiceAmt)
+			console.log(clientIdChoiceAmt)
 		})
 
 }
 
-function getQuantity (idchoice, productsArr){
+function getQuantity (clientIdChoiceAmt, productlist){
 
 	inquirer
 	.prompt({
@@ -101,11 +73,21 @@ function getQuantity (idchoice, productsArr){
 
 	})
 	.then(function (answer) {
-		var qrawchoice = answer.quantity;
-		var qchoice = parseInt(qrawchoice);
-		console.log(qchoice);
-    
+		var clientRawChoiceAmt = answer.quantity;
+		var clientChoice = parseInt(clientRawChoiceAmt);
+		console.log ()
 	});
-
-
+	
 }
+
+		inquirer
+	.prompt({
+		name: "price",
+		type: "confirm",
+		message: "Is that okay?"
+
+		
+	})
+		console.log("Updating quantity\n");
+
+

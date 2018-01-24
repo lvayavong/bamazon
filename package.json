@@ -10,14 +10,17 @@
     "type": "git",
     "url": "git+https://github.com/lvayavong/bamazon.git"
   },
-  "author": "",
+  "author": "London",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/lvayavong/bamazon/issues"
   },
   "homepage": "https://github.com/lvayavong/bamazon#readme",
   "dependencies": {
+    "dotenv": "^4.0.0",
+    "env": "0.0.2",
     "inquirer": "^5.0.1",
-    "mysql": "^2.15.0"
+    "mysql": "^2.15.0",
+    "require": "^2.4.20"
   }
 }
