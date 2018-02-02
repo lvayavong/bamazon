@@ -1,5 +1,5 @@
 
-DROP DATABASE IF EXISTS bamazon;
+DROP DATABASE bamazon;
 
 
 CREATE DATABASE bamazon;
